@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ICT-01 · IT Support &amp; Professionalism — Firebrand</title>
+<meta name="description" content="Learner hub for Module 01: IT Support & Professionalism. Slides, activities and scenarios." />
+<style>
+  /* ---------- Brand tokens (Firebrand / BPP) ---------- */
+  :root{
+    --fb-red:        #E1261C;   /* Firebrand primary */
+    --fb-red-dark:   #B81910;
+    --fb-charcoal:   #3B3B3A;   /* BPP charcoal */
+    --fb-ink:        #1A1A19;
+    --fb-navy:       #1F2A44;   /* supporting */
+    --fb-cream:      #F7F4EF;   /* warm surface */
+    --fb-paper:      #FFFFFF;
+    --fb-line:       #E6E2DC;
+    --fb-muted:      #6B6B68;
+    --fb-focus:      #FFB199;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    --shadow-sm: 0 1px 2px rgba(26,26,25,.04), 0 1px 1px rgba(26,26,25,.03);
+    --shadow-md: 0 6px 18px rgba(26,26,25,.06), 0 2px 4px rgba(26,26,25,.04);
+
+    --font-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-display: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  }
+
+  /* ---------- Base ---------- */
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:var(--font-sans);
+    font-size:16px;
+    line-height:1.55;
+    color:var(--fb-charcoal);
+    background:var(--fb-cream);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{ color:var(--fb-red); text-decoration:none; }
+  a:hover{ color:var(--fb-red-dark); }
+  a:focus-visible{ outline:3px solid var(--fb-focus); outline-offset:2px; border-radius:3px; }
+  h1,h2,h3,h4{ font-family:var(--font-display); color:var(--fb-ink); letter-spacing:-.01em; margin:0 0 .4em; }
+  h1{ font-size:clamp(2rem, 4vw, 3rem); line-height:1.1; letter-spacing:-.02em; }
+  h2{ font-size:1.5rem; line-height:1.2; }
+  h3{ font-size:1.125rem; line-height:1.3; }
+  p{ margin:0 0 1em; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:50;
+    background:var(--fb-paper);
+    border-bottom:1px solid var(--fb-line);
+  }
+  .topbar__inner{
+    max-width:1240px; margin:0 auto;
+    padding:14px 28px;
+    display:flex; align-items:center; gap:24px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:12px;
+    font-weight:700; font-size:1rem; color:var(--fb-ink);
+    letter-spacing:.02em;
+  }
+  .logo__mark{
+    width:30px; height:30px; border-radius:6px;
+    background:var(--fb-red);
+    display:grid; place-items:center;
+    color:#fff; font-weight:800; font-size:.85rem;
+    box-shadow: inset 0 -3px 0 rgba(0,0,0,.18);
+  }
+  .logo small{
+    display:block; font-weight:500; font-size:.72rem;
+    color:var(--fb-muted); letter-spacing:.08em; text-transform:uppercase;
+  }
+  .topbar__crumbs{
+    color:var(--fb-muted); font-size:.85rem;
+    margin-left:auto;
+  }
+  .topbar__crumbs strong{ color:var(--fb-ink); font-weight:600; }
+
+  /* ---------- Layout ---------- */
+  .shell{
+    max-width:1240px; margin:0 auto;
+    padding:0 28px 80px;
+    display:grid;
+    grid-template-columns: 240px 1fr;
+    gap:48px;
+  }
+  @media (max-width: 900px){
+    .shell{ grid-template-columns:1fr; gap:0; }
+    .sidenav{ display:none; }
+  }
+
+  /* ---------- Side nav ---------- */
+  .sidenav{
+    position:sticky; top:80px; align-self:start;
+    padding:32px 0;
+    border-right:1px solid var(--fb-line);
+    margin-right:-1px;
+  }
+  .sidenav__label{
+    font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--fb-muted); font-weight:600;
+    margin:0 0 12px;
+  }
+  .sidenav ul{ list-style:none; margin:0; padding:0; }
+  .sidenav li + li{ margin-top:2px; }
+  .sidenav a{
+    display:block;
+    padding:8px 14px 8px 14px;
+    border-left:2px solid transparent;
+    color:var(--fb-charcoal);
+    font-size:.92rem;
+    font-weight:500;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .sidenav a:hover{
+    background:var(--fb-cream);
+    color:var(--fb-ink);
+  }
+  .sidenav a.is-active{
+    border-left-color:var(--fb-red);
+    color:var(--fb-ink);
+    background:var(--fb-cream);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:56px 0 32px;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:.75rem; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--fb-red);
+    font-weight:700;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:""; display:inline-block; width:22px; height:2px;
+    background:var(--fb-red); vertical-align:middle; margin-right:10px;
+  }
+  .hero p.lede{
+    max-width:62ch;
+    font-size:1.125rem;
+    color:var(--fb-charcoal);
+  }
+  .hero__meta{
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:24px;
+  }
+  .tag{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:6px 12px;
+    background:var(--fb-paper);
+    border:1px solid var(--fb-line);
+    border-radius:999px;
+    font-size:.8rem; color:var(--fb-charcoal); font-weight:500;
+  }
+  .tag .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--fb-red);
+  }
+
+  /* ---------- Sections ---------- */
+  section.module{
+    padding:36px 0;
+    border-top:1px solid var(--fb-line);
+  }
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:16px; margin-bottom:24px; flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:1.75rem;
+  }
+  .section-head .count{
+    font-size:.85rem; color:var(--fb-muted);
+  }
+  .section-intro{
+    max-width:64ch; color:var(--fb-charcoal); margin-bottom:24px;
+  }
+
+  /* ---------- Card grid ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+    gap:16px;
+  }
+  .card{
+    position:relative;
+    display:flex; flex-direction:column;
+    background:var(--fb-paper);
+    border:1px solid var(--fb-line);
+    border-radius:var(--radius-md);
+    padding:20px 20px 18px;
+    box-shadow:var(--shadow-sm);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    text-decoration:none;
+    color:inherit;
+    overflow:hidden;
+  }
+  .card::after{
+    content:""; position:absolute; left:0; top:0; bottom:0;
+    width:3px; background:transparent; transition:background .18s ease;
+  }
+  .card:hover{
+    transform:translateY(-2px);
+    box-shadow:var(--shadow-md);
+    border-color:#d8d2c8;
+  }
+  .card:hover::after{ background:var(--fb-red); }
+  .card:hover .card__title{ color:var(--fb-red-dark); }
+
+  .card__top{
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:14px;
+  }
+  .filechip{
+    display:inline-flex; align-items:center;
+    height:24px; padding:0 8px;
+    font-size:.68rem; font-weight:700; letter-spacing:.06em;
+    border-radius:4px;
+    color:#fff;
+  }
+  .filechip--pptx{ background:#C24A1E; }
+  .filechip--docx{ background:#1F4E8A; }
+  .filechip--folder{ background:var(--fb-charcoal); }
+
+  .card__type{
+    font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--fb-muted); font-weight:600;
+  }
+  .card__title{
+    font-size:1.05rem; font-weight:600; color:var(--fb-ink);
+    margin:0 0 6px; line-height:1.3;
+    transition:color .18s ease;
+  }
+  .card__desc{
+    font-size:.9rem; color:var(--fb-muted);
+    margin:0;
+  }
+  .card__foot{
+    margin-top:auto; padding-top:14px;
+    display:flex; align-items:center; gap:6px;
+    font-size:.82rem; font-weight:600; color:var(--fb-red);
+  }
+  .card__foot svg{ width:14px; height:14px; transition:transform .18s ease; }
+  .card:hover .card__foot svg{ transform:translateX(3px); }
+
+  /* ---------- Nested group (Listening Gauntlet) ---------- */
+  .subgroup{
+    margin-top:32px;
+    background:var(--fb-paper);
+    border:1px solid var(--fb-line);
+    border-radius:var(--radius-lg);
+    padding:24px 24px 20px;
+  }
+  .subgroup__head{
+    display:flex; align-items:center; gap:14px;
+    margin-bottom:6px;
+  }
+  .subgroup__icon{
+    width:36px; height:36px; border-radius:8px;
+    background:linear-gradient(135deg, var(--fb-red), var(--fb-red-dark));
+    display:grid; place-items:center; color:#fff;
+    flex-shrink:0;
+  }
+  .subgroup__head h3{
+    margin:0; font-size:1.15rem;
+  }
+  .subgroup__intro{
+    color:var(--fb-muted); font-size:.92rem;
+    margin:0 0 18px;
+  }
+  .scenarios{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+    gap:10px;
+  }
+  .scenario{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 14px;
+    background:var(--fb-cream);
+    border:1px solid transparent;
+    border-radius:var(--radius-sm);
+    text-decoration:none; color:var(--fb-ink);
+    font-size:.92rem; font-weight:500;
+    transition:background .15s, border-color .15s, transform .15s;
+  }
+  .scenario:hover{
+    background:#fff;
+    border-color:var(--fb-red);
+    transform:translateX(2px);
+  }
+  .scenario__num{
+    width:26px; height:26px; flex-shrink:0;
+    display:grid; place-items:center;
+    background:var(--fb-paper);
+    border:1px solid var(--fb-line);
+    border-radius:50%;
+    font-size:.78rem; font-weight:700; color:var(--fb-red);
+  }
+  .scenario:hover .scenario__num{
+    background:var(--fb-red); color:#fff; border-color:var(--fb-red);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.foot{
+    border-top:1px solid var(--fb-line);
+    margin-top:48px;
+    padding:24px 0 0;
+    color:var(--fb-muted); font-size:.85rem;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+  footer.foot strong{ color:var(--fb-ink); font-weight:600; }
+
+  /* ---------- Accent banner ---------- */
+  .accent-rule{
+    height:4px; width:64px;
+    background:var(--fb-red);
+    border-radius:2px;
+    margin-bottom:18px;
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar" role="banner">
+  <div class="topbar__inner">
+    <a class="logo" href="#top" aria-label="Firebrand ICT home">
+      <span class="logo__mark" aria-hidden="true">F</span>
+      <span>
+        Firebrand ICT
+        <small>Learner Portal</small>
+      </span>
+    </a>
+    <div class="topbar__crumbs" aria-label="Breadcrumb">
+      Modules / <strong>01 · IT Support &amp; Professionalism</strong>
+    </div>
+  </div>
+</header>
+
+<div class="shell" id="top">
+
+  <!-- ============== SIDE NAV ============== -->
+  <aside class="sidenav" aria-label="Section navigation">
+    <p class="sidenav__label">On this page</p>
+    <ul>
+      <li><a href="#overview" class="is-active">Overview</a></li>
+      <li><a href="#slides">Slides</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#listening-gauntlet">The Listening Gauntlet</a></li>
+    </ul>
+  </aside>
+
+  <!-- ============== MAIN ============== -->
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="overview" aria-labelledby="hero-title">
+      <span class="eyebrow">Module 01</span>
+      <h1 id="hero-title">IT Support &amp; Professionalism</h1>
+      <div class="accent-rule" aria-hidden="true"></div>
+      <p class="lede">
+        Welcome to the opening module of your ICT programme. This page is your
+        single starting point for everything you need across the two delivery
+        days &mdash; lecture slides, structured activities, and the Listening
+        Gauntlet scenario pack. Choose a resource below to open it.
+      </p>
+      <div class="hero__meta">
+        <span class="tag"><span class="dot" aria-hidden="true"></span> 2 days of delivery</span>
+        <span class="tag"><span class="dot" aria-hidden="true"></span> 3 core activities</span>
+        <span class="tag"><span class="dot" aria-hidden="true"></span> 6 listening scenarios</span>
+      </div>
+    </section>
+
+    <!-- ============ SLIDES ============ -->
+    <section class="module" id="slides" aria-labelledby="slides-title">
+      <div class="section-head">
+        <h2 id="slides-title">Slides</h2>
+        <span class="count">2 decks</span>
+      </div>
+      <p class="section-intro">
+        The teaching decks delivered across the two days of this module. Open
+        each in PowerPoint or your browser&rsquo;s preview to follow along with
+        the live session.
+      </p>
+
+      <div class="grid">
+        <a class="card" href="Slides/ICT01_Day1.pptx">
+          <div class="card__top">
+            <span class="filechip filechip--pptx">PPTX</span>
+            <span class="card__type">Slide deck · Day 1</span>
+          </div>
+          <h3 class="card__title">ICT-01 &mdash; Day 1</h3>
+          <p class="card__desc">
+            Foundations of IT support, the helpdesk environment and the
+            professionalism mindset.
+          </p>
+          <span class="card__foot">
+            Open deck
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a class="card" href="Slides/ICT01_Day2.pptx">
+          <div class="card__top">
+            <span class="filechip filechip--pptx">PPTX</span>
+            <span class="card__type">Slide deck · Day 2</span>
+          </div>
+          <h3 class="card__title">ICT-01 &mdash; Day 2</h3>
+          <p class="card__desc">
+            Building on day one &mdash; legal context, goal-setting frameworks
+            and reflective practice.
+          </p>
+          <span class="card__foot">
+            Open deck
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ ACTIVITIES ============ -->
+    <section class="module" id="activities" aria-labelledby="activities-title">
+      <div class="section-head">
+        <h2 id="activities-title">Activities</h2>
+        <span class="count">3 worksheets + scenario pack</span>
+      </div>
+      <p class="section-intro">
+        Hands-on tasks to embed the theory. Download each worksheet, complete
+        it, and bring it to your next session for discussion.
+      </p>
+
+      <div class="grid">
+        <a class="card" href="Activities/Goal_Setting.docx">
+          <div class="card__top">
+            <span class="filechip filechip--docx">DOCX</span>
+            <span class="card__type">Worksheet</span>
+          </div>
+          <h3 class="card__title">Goal Setting</h3>
+          <p class="card__desc">
+            Define SMART personal and professional goals for the programme
+            ahead.
+          </p>
+          <span class="card__foot">
+            Open worksheet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a class="card" href="Activities/Legal_Compliance.docx">
+          <div class="card__top">
+            <span class="filechip filechip--docx">DOCX</span>
+            <span class="card__type">Worksheet</span>
+          </div>
+          <h3 class="card__title">Legal Compliance</h3>
+          <p class="card__desc">
+            Explore the key UK legal frameworks every IT support professional
+            must operate within.
+          </p>
+          <span class="card__foot">
+            Open worksheet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <a class="card" href="Activities/Self_Assessment.docx">
+          <div class="card__top">
+            <span class="filechip filechip--docx">DOCX</span>
+            <span class="card__type">Worksheet</span>
+          </div>
+          <h3 class="card__title">Self Assessment</h3>
+          <p class="card__desc">
+            A structured reflection on your current skills, gaps and growth
+            priorities.
+          </p>
+          <span class="card__foot">
+            Open worksheet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+
+      <!-- ============ LISTENING GAUNTLET (nested group) ============ -->
+      <div class="subgroup" id="listening-gauntlet">
+        <div class="subgroup__head">
+          <span class="subgroup__icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 18 0v3a3 3 0 0 1-3 3h-1v-7h4"/><path d="M3 15v-3"/><path d="M3 18a3 3 0 0 0 3-3v-3H3"/></svg>
+          </span>
+          <h3>The Listening Gauntlet</h3>
+          <span class="filechip filechip--folder" style="margin-left:auto;">FOLDER</span>
+        </div>
+        <p class="subgroup__intro">
+          A role-play activity made up of six escalating scenarios. Read the
+          briefing first, then work through the scenarios in order.
+        </p>
+
+        <a class="card" href="Activities/The%20Listening%20Gauntlet/Listening_Gauntlet.docx" style="margin-bottom:18px;">
+          <div class="card__top">
+            <span class="filechip filechip--docx">DOCX</span>
+            <span class="card__type">Activity briefing</span>
+          </div>
+          <h3 class="card__title">Listening Gauntlet &mdash; Briefing</h3>
+          <p class="card__desc">
+            Read this first. Sets out the rules, learning aims and how to
+            debrief each scenario.
+          </p>
+          <span class="card__foot">
+            Open briefing
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+
+        <div class="scenarios" role="list">
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario1.docx">
+            <span class="scenario__num">1</span> Scenario One
+          </a>
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario2.docx">
+            <span class="scenario__num">2</span> Scenario Two
+          </a>
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario3.docx">
+            <span class="scenario__num">3</span> Scenario Three
+          </a>
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario4.docx">
+            <span class="scenario__num">4</span> Scenario Four
+          </a>
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario5.docx">
+            <span class="scenario__num">5</span> Scenario Five
+          </a>
+          <a class="scenario" role="listitem" href="Activities/The%20Listening%20Gauntlet/Scenario6.docx">
+            <span class="scenario__num">6</span> Scenario Six
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div><strong>Firebrand ICT</strong> &middot; Module 01 learner resources</div>
+      <div>Files open in their native application (PowerPoint / Word).</div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Highlight current section in the side nav as the user scrolls.
+  (function(){
+    const links = document.querySelectorAll('.sidenav a[href^="#"]');
+    if(!('IntersectionObserver' in window) || !links.length) return;
+
+    const map = new Map();
+    links.forEach(a => {
+      const id = a.getAttribute('href').slice(1);
+      const target = document.getElementById(id);
+      if(target) map.set(target, a);
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          links.forEach(l => l.classList.remove('is-active'));
+          const link = map.get(entry.target);
+          if(link) link.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+    map.forEach((_, section) => io.observe(section));
+  })();
+</script>
+
+</body>
+</html>
